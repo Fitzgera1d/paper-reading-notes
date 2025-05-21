@@ -98,18 +98,24 @@ DINOv2 的方法论建立在其前身 DINO (self-**DI**stillation with **NO** la
     *   **设计理念**: 目标是让学生网络对一个输入视图的预测，与教师网络对同一输入的另一个不同视图的预测相匹配。
         对于教师网络输出的概率分布 $P_t$ 和学生网络输出的概率分布 $P_s$，损失函数可以表示为：
 
-        $$ \mathcal{L} = - \sum_{x_i \in \text{views}} \sum_{j \neq i} P_t(x_i) \log P_s(x_j) $$
+        ```math
+        \mathcal{L} = - \sum_{x_i \in \text{views}} \sum_{j \neq i} P_t(x_i) \log P_s(x_j)
+        ```
 
         这里的 $x_i$ 和 $x_j$ 是同一原始图像的不同增强视图。求和遍历所有全局视图和局部视图的组合。 $P_s$ 和 $P_t$ 是通过将投影头的输出 $g_s$ 和 $g_t$（维度为 K）经过一个 softmax 函数得到的：
 
-        $$ P(x)[k] = \frac{\exp(g(x)[k] / \tau)}{\sum_{k'=1}^{K} \exp(g(x)[k'] / \tau)} $$
+        ```math
+        P(x)[k] = \frac{\exp(g(x)[k] / \tau)}{\sum_{k'=1}^{K} \exp(g(x)[k'] / \tau)}
+        ```
         
         其中 $\tau$ 是温度系数。
     *   **教师输出锐化 (Teacher Output Sharpening)**: 为了产生更尖锐、信息量更大的目标分布，教师网络的 softmax 温度 $\tau_t$ 通常设置得比学生网络的温度 $\tau_s$ 更小 ($\tau_t < \tau_s$)。这使得教师的输出分布更接近 one-hot 编码，为学生提供更强的学习信号。
     *   **中心化 (Centering)**: 为了防止网络输出在所有样本上都集中到少数几个维度（即所谓的"模式坍塌"），教师网络的输出在 softmax 之前会进行中心化操作。DINO 中使用了一个偏移量 $c$，该偏移量是教师网络在一个批次数据上输出的指数移动平均。DINOv2 使用了 Sinkhorn-Knopp 算法进行批归一化，这是一种更有效且通常效果更好的中心化方法。
-    *   **KoLeo 正则化器 (KoLeo Regularizer)**: DINOv2 在学生网络的 [CLS] token 特征（在投影头之前）上额外增加了一个 KoLeo (k-means optimized output) 正则化损失。这个正则化器鼓励批次内特征向量在单位球面上均匀分布，从而提高特征的多样性和判别力，防止特征空间坍缩到低维子空间。其形式大致为：\
+    *   **KoLeo 正则化器 (KoLeo Regularizer)**: DINOv2 在学生网络的 [CLS] token 特征（在投影头之前）上额外增加了一个 KoLeo (k-means optimized output) 正则化损失。这个正则化器鼓励批次内特征向量在单位球面上均匀分布，从而提高特征的多样性和判别力，防止特征空间坍缩到低维子空间。其形式大致为：
 
-        $$ \mathcal{L}_{\text{KoLeo}} = \frac{1}{B} \sum_{i=1}^B \log \left( \sum_{j=1}^B \exp \left( - \frac{\| f_i - f_j \|_2^2}{\sigma^2} \right) \right) $$
+        ```math 
+        \mathcal{L}_{\text{KoLeo}} = \frac{1}{B} \sum_{i=1}^B \log \left( \sum_{j=1}^B \exp \left( - \frac{\| f_i - f_j \|_2^2}{\sigma^2} \right) \right) 
+        ```
 
         这里 $f_i$ 是第 $i$ 个样本的 [CLS] 特征，$B$ 是批量大小，$\sigma$ 是一个超参数。
     

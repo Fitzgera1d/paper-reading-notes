@@ -1,4 +1,4 @@
-# **扩散模型演进路线图：里程碑式进展解析**
+# **Survey of Diffusion Models**
 
 **摘要**
 

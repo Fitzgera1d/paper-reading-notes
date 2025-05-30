@@ -72,76 +72,77 @@ RoMa的整体流程遵循了一个由粗到精（coarse-to-fine）的稠密匹�
 
   ```mermaid
   graph TD
-      Node_A["Input Image I_A <br/> [B, 3, H, W]"]
-      Node_B["Input Image I_B <br/> [B, 3, H, W]"]
+      Node_A["Input Image IA (B,3,H,W)"]
+      Node_B["Input Image IB (B,3,H,W)"]
   
-      subgraph "Feature Extraction (F_c)"
+      subgraph FE_Subgraph ["Feature Extraction (F_c)"]
           direction LR
   
-          subgraph "Coarse Feature Encoders (F_coarse)"
-              Node_A --> DINO_A_Proc["DINOv2 (ViT-L-14) for A <br/> Frozen, Patch 14x14 <br/> Proj. to 512 dim"]
-              DINO_A_Proc --> F_A_coarse["F_A_coarse <br/> [B, 512, H/14, W/14]"]
+          subgraph CFE_Subgraph ["Coarse Feature Encoders (F_coarse)"]
+              Node_A --> DINO_A_Proc["DINOv2 for A (ViT-L-14, Frozen, Patch 14x14, Proj 512dim)"]
+              DINO_A_Proc --> F_A_coarse["F_A_coarse (B,512,H/14,W/14)"]
               
-              Node_B --> DINO_B_Proc["DINOv2 (ViT-L-14) for B <br/> Frozen, Patch 14x14 <br/> Proj. to 512 dim"]
-              DINO_B_Proc --> F_B_coarse["F_B_coarse <br/> [B, 512, H/14, W/14]"]
+              Node_B --> DINO_B_Proc["DINOv2 for B (ViT-L-14, Frozen, Patch 14x14, Proj 512dim)"]
+              DINO_B_Proc --> F_B_coarse["F_B_coarse (B,512,H/14,W/14)"]
           end
   
-          subgraph "Fine Feature Encoders (F_fine)"
-              Node_A --> VGG19_A_Proc["VGG19 for A <br/> Strides {1,2,4,8} <br/> Proj. to {9,64,256,512} dim"]
-              VGG19_A_Proc --> F_A_fine_pyr["F_A_fine (Pyramid A) <br/> Multi-scale features"]
+          subgraph FFE_Subgraph ["Fine Feature Encoders (F_fine)"]
+              Node_A --> VGG19_A_Proc["VGG19 for A (Strides 1,2,4,8, Proj {9,64,256,512}dim)"]
+              VGG19_A_Proc --> F_A_fine_pyr["F_A_fine Pyramid A (Multi-scale)"]
   
-              Node_B --> VGG19_B_Proc["VGG19 for B <br/> Strides {1,2,4,8} <br/> Proj. to {9,64,256,512} dim"]
-              VGG19_B_Proc --> F_B_fine_pyr["F_B_fine (Pyramid B) <br/> Multi-scale features"]
+              Node_B --> VGG19_B_Proc["VGG19 for B (Strides 1,2,4,8, Proj {9,64,256,512}dim)"]
+              VGG19_B_Proc --> F_B_fine_pyr["F_B_fine Pyramid B (Multi-scale)"]
           end
       end
   
-      F_A_coarse --> GP_Module_Input_A[F_A_coarse for GP]
-      F_B_coarse --> GP_Module_Input_B[F_B_coarse for GP]
-      F_A_coarse --> Decoder_Input_F_A_coarse["F_A_coarse (projected) for Decoder"]
+      F_A_coarse --> GP_Mod_In_A[F_A_coarse for GP]
+      F_B_coarse --> GP_Mod_In_B[F_B_coarse for GP]
+      F_A_coarse --> Dec_In_F_A[Proj F_A_coarse for Decoder]
   
-      subgraph "Coarse Matching (G_c)"
+      subgraph CM_Subgraph ["Coarse Matching (G_c)"]
           direction TB
-          subgraph "Match Encoder (E_c)"
-              GP_Module_Input_A --> GP_Aggregator{{GP Inputs: F_A_coarse, F_B_coarse}}
-              GP_Module_Input_B --> GP_Aggregator
-              GP_Aggregator --> GP_Module["Gaussian Process (GP) Module <br/> Output: GP Encoded Features (512 dim)"]
+          subgraph ME_Subgraph ["Match Encoder (E_c)"]
+              GP_Mod_In_A --> GP_Agg{{GP Inputs: F_A_coarse, F_B_coarse}}
+              GP_Mod_In_B --> GP_Agg
+              GP_Agg --> GP_Mod["Gaussian Process (GP) Module (Output: GP Encoded Feats 512dim)"]
           end
-          subgraph "Match Decoder (D_c)"
-              GP_Module --> Decoder_Input_GP_Output[GP Output Features]
+          subgraph MD_Subgraph ["Match Decoder (D_c)"]
+              GP_Mod --> Dec_In_GP_Out[GP Output Feats]
               
-              Decoder_Input_F_A_coarse --> Concat_Module[Concatenate]
-              Decoder_Input_GP_Output --> Concat_Module
-              Concat_Module --> TransDec[Transformer Match Decoder <br/> 5 ViT Blocks, No Pos. Enc. <br/> Input: Proj. F_A_coarse + GP_output]
-              TransDec --> AnchorProbs["Anchor Probabilities p(x_B|x_A) <br/> [B, H_c, W_c, K] <br/> K=64x64 anchors"]
-              TransDec --> MatchScoreCoarse["Matchability Score p(x_A_coarse) <br/> [B, H_c, W_c, 1]"]
+              Dec_In_F_A --> Concat_Mod[Concatenate]
+              Dec_In_GP_Out --> Concat_Mod
+              Concat_Mod --> Trans_Dec["Transformer Match Decoder (5 ViT Blocks, No Pos Enc, Input: Proj F_A_coarse + GP_output)"]
+              Trans_Dec --> Anch_Probs["Anchor Probs p(xB|xA) (B,Hc,Wc,K K=64x64)"]
+              Trans_Dec --> MScore_Coarse["Matchability Score p(xA_coarse) (B,Hc,Wc,1)"]
           end
-          AnchorProbs --> ToWarp_Func["ToWarp Function (Eq. 9) <br/> Weighted avg. of anchor coords"]
-          ToWarp_Func --> W_coarse["Initial Coarse Warp W_A->B_coarse <br/> [B, H_c, W_c, 2]"]
+          Anch_Probs --> ToWarp_F["ToWarp Func (Eq 9, Weighted avg)"]
+          ToWarp_F --> W_crs["Initial Coarse Warp W_A->B_coarse (B,Hc,Wc,2)"]
       end
   
-      W_coarse --> Refiner_Input_Warp[W_coarse data for Refinement]
-      MatchScoreCoarse --> Refiner_Input_Score["p(x_A_coarse) data for Refinement"]
-      F_A_fine_pyr --> Refiner_Input_Fine_A[F_A_fine_pyr for Refinement]
-      F_B_fine_pyr --> Refiner_Input_Fine_B[F_B_fine_pyr for Refinement]
+      W_crs --> Ref_In_Warp[W_coarse for Refinement]
+      MScore_Coarse --> Ref_In_Score["p(xA_coarse) for Refinement"]
+      F_A_fine_pyr --> Ref_In_Fine_A[F_A_fine_pyr for Refinement]
+      F_B_fine_pyr --> Ref_In_Fine_B[F_B_fine_pyr for Refinement]
   
-      subgraph "Fine Matching / Refinement (R_c)"
+      subgraph FMR_Subgraph ["Fine Matching / Refinement (R_c)"]
           direction TB
-          Refiner_Input_Warp --> Refinement_Aggregator{{Refinement Inputs}}
-          Refiner_Input_Score --> Refinement_Aggregator
-          Refiner_Input_Fine_A --> Refinement_Aggregator
-          Refiner_Input_Fine_B --> Refinement_Aggregator
+          Ref_In_Warp --> Ref_Agg{{Refinement Inputs}}
+          Ref_In_Score --> Ref_Agg
+          Ref_In_Fine_A --> Ref_Agg
+          Ref_In_Fine_B --> Ref_Agg
   
-          Refinement_Aggregator --> RefinersIter["Recursive Refiners (R_theta,i) <br/> 5 Refiners (ConvNets) for strides {14,8,4,2,1}"]
-          RefinersIter --> Refiner_s14["Refiner @ Stride 14 (DINOv2 scale) <br/> Output: W_s14, p_s14"]
-          Refiner_s14 --> Refiner_s8[Refiner @ Stride 8 <br/> Output: W_s8, p_s8]
-          Refiner_s8 --> Refiner_s4[Refiner @ Stride 4 <br/> Output: W_s4, p_s4]
-          Refiner_s4 --> Refiner_s2[Refiner @ Stride 2 <br/> Output: W_s2, p_s2]
-          Refiner_s2 --> Refiner_s1["Refiner @ Stride 1 (Full Res) <br/> Output: W_s1, p_s1"]
+          Ref_Agg --> Ref_Iter["Recursive Refiners (R_theta,i) (5 ConvNet Refiners, Strides 14,8,4,2,1)"]
+          Ref_Iter --> Ref_s14["Refiner @ Stride 14 (Output: W_s14, p_s14)"]
+          Ref_s14 --> Ref_s8["Refiner @ Stride 8 (Output: W_s8, p_s8)"]
+          Ref_s8 --> Ref_s4["Refiner @ Stride 4 (Output: W_s4, p_s4)"]
+          Ref_s4 --> Ref_s2["Refiner @ Stride 2 (Output: W_s2, p_s2)"]
+          Ref_s2 --> Ref_s1["Refiner @ Stride 1 FullRes (Output: W_s1, p_s1)"]
       end
   
-      Refiner_s1 --> FinalWarp["Final Dense Warp W_A->B <br/> [B, H, W, 2]"]
-      Refiner_s1 --> FinalMatchScore["Final Matchability Score p(x_A) <br/> [B, H, W, 1]"]
+      Ref_s1 --> FinWarp["Final Dense Warp W_A->B (B,H,W,2)"]
+      Ref_s1 --> FinMScore["Final Matchability Score p(xA) (B,H,W,1)"]
   
+      %% Style Definitions
       classDef input fill:#D6EAF8,stroke:#3498DB,stroke-width:2px;
       classDef stage fill:#E8F8F5,stroke:#1ABC9C,stroke-width:2px;
       classDef module fill:#FEF9E7,stroke:#F1C40F,stroke-width:2px;
@@ -149,17 +150,19 @@ RoMa的整体流程遵循了一个由粗到精（coarse-to-fine）的稠密匹�
       classDef finalOutput fill:#D5F5E3,stroke:#2ECC71,stroke-width:2px;
       classDef aggregator shape:hexagon,fill:#E8DAEF,stroke:#8E44AD,stroke-width:1.5px;
   
+      %% Apply Styles
       class Node_A,Node_B input;
-      class DINO_A_Proc,DINO_B_Proc,VGG19_A_Proc,VGG19_B_Proc,GP_Module,Concat_Module,TransDec,ToWarp_Func,RefinersIter module;
+      class DINO_A_Proc,DINO_B_Proc,VGG19_A_Proc,VGG19_B_Proc,GP_Mod,Concat_Mod,Trans_Dec,ToWarp_F,Ref_Iter module;
       class F_A_coarse,F_B_coarse,F_A_fine_pyr,F_B_fine_pyr data;
-      class GP_Module_Input_A,GP_Module_Input_B,Decoder_Input_F_A_coarse,Decoder_Input_GP_Output data;
-      class AnchorProbs,MatchScoreCoarse,W_coarse data;
-      class Refiner_Input_Warp,Refiner_Input_Score,Refiner_Input_Fine_A,Refiner_Input_Fine_B data;
-      class Refiner_s14,Refiner_s8,Refiner_s4,Refiner_s2,Refiner_s1 data;
-      class FinalWarp,FinalMatchScore finalOutput;
-      class Feature Extraction,Coarse_Matching,Fine_Matching_stage;
-      class Coarse Feature_Encoders,Fine_Feature_Encoders,Match Encoder,Match Decoder module;
-      class GP_Aggregator,Refinement_Aggregator aggregator;
+      class GP_Mod_In_A,GP_Mod_In_B,Dec_In_F_A,Dec_In_GP_Out data;
+      class Anch_Probs,MScore_Coarse,W_crs data;
+      class Ref_In_Warp,Ref_In_Score,Ref_In_Fine_A,Ref_In_Fine_B data;
+      class Ref_s14,Ref_s8,Ref_s4,Ref_s2,Ref_s1 data;
+      class FinWarp,FinMScore finalOutput;
+      class GP_Agg,Ref_Agg aggregator;
+      
+      %% Note: Styling subgraph containers themselves (like FE_Subgraph) usually requires specific CSS targeting if the renderer supports it,
+      %% or styling wrapper nodes if that pattern is used. The classDef 'stage' is available.
   ```
 
 *   **详细网络架构与数据流**:

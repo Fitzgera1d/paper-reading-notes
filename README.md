@@ -109,6 +109,12 @@
 
 - 辅助阅读的网址：[AlphaAxiv](https://www.alphaxiv.org/)
 
+- 流程图绘制：
+
+  ```markdown
+  请使用mermaid绘制论文中*网络架构与数据流*的流程图。
+  ```
+
 
 ## Contents
 

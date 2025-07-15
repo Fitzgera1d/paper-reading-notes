@@ -103,9 +103,9 @@
   1. 本研究的直观动机是什么？它在技术设计中是如何体现的？
   2. 本研究与哪项已有工作最为相关，在哪些关键方面进行了改进或创新？
   ```
-- [复杂提示词](./prompts/cv_paper_notes_cn.md)：
+- [复杂提示词](./.prompts/cv_paper_notes_cn.md)：
   ```markdown
-  %content(./prompts/cv_paper_notes_cn.md)
+  %content(./.prompts/cv_paper_notes_cn.md)
   ```
 
 - 流程图绘制：

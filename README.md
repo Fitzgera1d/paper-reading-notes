@@ -103,7 +103,7 @@
   1. What is the intuitive motivation for this research? How is it reflected in the technical design?
   2. Which existing work is most relevant to this study, and in what key aspects has it been improved or innovated upon?
   ```
-- [Complex Prompt](./prompts/cv_paper_notes_en.md):
+- [Complex Prompt](./.prompts/cv_paper_notes_en.md):
   ```markdown
   # Prompts
   

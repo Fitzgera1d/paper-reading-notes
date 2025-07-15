@@ -223,17 +223,17 @@
     - [survey](base/tokenizer/survey.md)
   - **transformer/**
 - **motion/**
-  - [202208QuickPose](motion/202208QuickPose.md)
-  - [202306HMR3D](motion/202306HMR3D.md)
-  - [202308HMR2.0](motion/202308HMR2.0.md)
-  - [202312ViTPose++](motion/202312ViTPose++.md)
-  - [202403TRAM](motion/202403TRAM.md)
-  - [202409GVHMR](motion/202409GVHMR.md)
-  - [202501JOSH](motion/202501JOSH.md)
+  - [202208_QuickPose](motion/202208_QuickPose.md)
+  - [202306_HMR3D](motion/202306_HMR3D.md)
+  - [202308_HMR2.0](motion/202308_HMR2.0.md)
+  - [202312_ViTPose++](motion/202312_ViTPose++.md)
+  - [202403_TRAM](motion/202403_TRAM.md)
+  - [202409_GVHMR](motion/202409_GVHMR.md)
+  - [202501_JOSH](motion/202501_JOSH.md)
 - **reconstruction/**
   - [VGGT](reconstruction/VGGT.md)
   - **depth/**
-    - [DPT](reconstruction/depth/DPT.md)
-    - [DepthAnythingV2](reconstruction/depth/DepthAnythingV2.md)
+    - [202105_DPT](reconstruction/depth/202105_DPT.md)
+    - [202410_DepthAnythingV2](reconstruction/depth/202410_DepthAnythingV2.md)
   - **match/**
     - [RoMa](reconstruction/match/RoMa.md)

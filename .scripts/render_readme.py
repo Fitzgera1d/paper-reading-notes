@@ -30,7 +30,7 @@ def generate_tree(start_path_str, project_root):
     spec = get_gitignore_spec(project_root)
     
     # Directories to always skip
-    excluded_dirs_base = {'assets', 'prompts', 'node_modules', '__pycache__'}
+    excluded_dirs_base = {'assets', 'node_modules', '__pycache__'}
 
     # Walk through the directory
     for root, dirs, files in os.walk(start_path, topdown=True):

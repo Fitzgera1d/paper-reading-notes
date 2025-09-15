@@ -212,9 +212,10 @@
 - **base/**
   - [RAFT](base/RAFT.md)
   - **diffusion/**
-    - [DDPMs](base/diffusion/DDPMs.md)
+    - [202012_DDPMs](base/diffusion/202012_DDPMs.md)
+    - [202204_LDMs](base/diffusion/202204_LDMs.md)
+    - [202305_DiT](base/diffusion/202305_DiT.md)
     - [DMs](base/diffusion/DMs.md)
-    - [LDMs](base/diffusion/LDMs.md)
     - [survey](base/diffusion/survey.md)
   - **ssm/**
   - **tokenizer/**
@@ -231,9 +232,14 @@
   - [202409_GVHMR](motion/202409_GVHMR.md)
   - [202501_JOSH](motion/202501_JOSH.md)
 - **reconstruction/**
-  - [VGGT](reconstruction/VGGT.md)
+  - [202503_VGGT](reconstruction/202503_VGGT.md)
+  - **3dscene/**
+    - [202308_PlainDETR](reconstruction/3dscene/202308_PlainDETR.md)
+    - [202412_CubifyAnything](reconstruction/3dscene/202412_CubifyAnything.md)
+    - [202503_LiteReality](reconstruction/3dscene/202503_LiteReality.md)
+    - [202505_CAST](reconstruction/3dscene/202505_CAST.md)
   - **depth/**
     - [202105_DPT](reconstruction/depth/202105_DPT.md)
     - [202410_DepthAnythingV2](reconstruction/depth/202410_DepthAnythingV2.md)
   - **match/**
-    - [RoMa](reconstruction/match/RoMa.md)
+    - [202305_RoMa](reconstruction/match/202305_RoMa.md)

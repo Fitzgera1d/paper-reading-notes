@@ -209,38 +209,43 @@
 
 ## Table of Contents
 
-- **base/**
-  - [202005_RAFT](base/202005_RAFT.md)
-  - **diffusion/**
-    - [201511_DMs](base/diffusion/201511_DMs.md)
-    - [202012_DDPMs](base/diffusion/202012_DDPMs.md)
-    - [202106_ADMs](base/diffusion/202106_ADMs.md)
-    - [202204_LDMs](base/diffusion/202204_LDMs.md)
-    - [202305_DiT](base/diffusion/202305_DiT.md)
-    - [survey](base/diffusion/survey.md)
-  - **ssm/**
-  - **tokenizer/**
-    - [202201_iBOT](base/tokenizer/202201_iBOT.md)
-    - [202402_DINOv2](base/tokenizer/202402_DINOv2.md)
-    - [survey](base/tokenizer/survey.md)
-  - **transformer/**
-- **motion/**
-  - [202208_QuickPose](motion/202208_QuickPose.md)
-  - [202306_HMR3D](motion/202306_HMR3D.md)
-  - [202308_HMR2.0](motion/202308_HMR2.0.md)
-  - [202312_ViTPose++](motion/202312_ViTPose++.md)
-  - [202403_TRAM](motion/202403_TRAM.md)
-  - [202409_GVHMR](motion/202409_GVHMR.md)
-  - [202501_JOSH](motion/202501_JOSH.md)
-- **reconstruction/**
-  - [202503_VGGT](reconstruction/202503_VGGT.md)
-  - **3dscene/**
-    - [202308_PlainDETR](reconstruction/3dscene/202308_PlainDETR.md)
-    - [202412_CubifyAnything](reconstruction/3dscene/202412_CubifyAnything.md)
-    - [202503_LiteReality](reconstruction/3dscene/202503_LiteReality.md)
-    - [202505_CAST](reconstruction/3dscene/202505_CAST.md)
-  - **depth/**
-    - [202105_DPT](reconstruction/depth/202105_DPT.md)
-    - [202410_DepthAnythingV2](reconstruction/depth/202410_DepthAnythingV2.md)
-  - **match/**
-    - [202305_RoMa](reconstruction/match/202305_RoMa.md)
+- **Base/**
+  - [202005_RAFT](Base/202005_RAFT.md)
+  - **Diffusion_Models/**
+    - [201511_DMs](Base/Diffusion_Models/201511_DMs.md)
+    - [202012_DDPMs](Base/Diffusion_Models/202012_DDPMs.md)
+    - [202106_ADMs](Base/Diffusion_Models/202106_ADMs.md)
+    - [202204_LDMs](Base/Diffusion_Models/202204_LDMs.md)
+    - [202305_DiT](Base/Diffusion_Models/202305_DiT.md)
+    - [survey](Base/Diffusion_Models/survey.md)
+  - **SSM/**
+  - **Tokenization/**
+    - [202201_iBOT](Base/Tokenization/202201_iBOT.md)
+    - [202402_DINOv2](Base/Tokenization/202402_DINOv2.md)
+    - [survey](Base/Tokenization/survey.md)
+  - **Transformer/**
+- **Generation/**
+  - [202412_Imagen3](Generation/202412_Imagen3.md)
+- **Human_Motion/**
+  - [202208_QuickPose](Human_Motion/202208_QuickPose.md)
+  - [202306_HMR3D](Human_Motion/202306_HMR3D.md)
+  - [202308_HMR2.0](Human_Motion/202308_HMR2.0.md)
+  - [202312_ViTPose++](Human_Motion/202312_ViTPose++.md)
+  - [202403_TRAM](Human_Motion/202403_TRAM.md)
+  - [202409_GVHMR](Human_Motion/202409_GVHMR.md)
+  - [202501_JOSH](Human_Motion/202501_JOSH.md)
+- **Reconsturction/**
+  - [202503_VGGT](Reconsturction/202503_VGGT.md)
+  - **CAD/**
+    - [202308_PlainDETR](Reconsturction/CAD/202308_PlainDETR.md)
+    - [202412_CubifyAnything](Reconsturction/CAD/202412_CubifyAnything.md)
+    - [202503_LiteReality](Reconsturction/CAD/202503_LiteReality.md)
+    - [202505_CAST](Reconsturction/CAD/202505_CAST.md)
+    - **Ref/**
+      - [202405_BlockFusion](Reconsturction/CAD/Ref/202405_BlockFusion.md)
+      - [202411_BrepGen](Reconsturction/CAD/Ref/202411_BrepGen.md)
+  - **Depth_Estimation/**
+    - [202105_DPT](Reconsturction/Depth_Estimation/202105_DPT.md)
+    - [202410_DepthAnythingV2](Reconsturction/Depth_Estimation/202410_DepthAnythingV2.md)
+  - **Matching/**
+    - [202305_RoMa](Reconsturction/Matching/202305_RoMa.md)

@@ -110,7 +110,7 @@
   **角色设定**：你是一位资深的计算机图形学研究员，精通从学术论文中提炼深层见解，并能以高度连贯和逻辑严谨的语言组织笔记。你的目标是生成一份不仅信息全面，而且易于理解和回顾的深度研究笔记。
   
   ## 核心处理原则
-  1.  **追求连贯性与逻辑性**：在生成笔记时，请尽量使用流畅的叙述性语言，减少不必要的分点和孤立的段落。确保各个分析模块之间有自然的过渡和逻辑关联，形成一篇浑然一体的深度解读。
+  1.  **追求连贯性与逻辑性**：在生成笔记时，请尽量使用成段的流畅的叙述性语言，尽最大可能保证没有不必要的分点和孤立的段落。确保各个分析模块之间有自然的过渡和逻辑关联，形成一篇浑然一体的深度解读。
   2.  **分层精读与信息整合**：
       *   **速览与框架构建 (10分钟)**：快速阅读摘要、引言、结论，理解论文核心贡献和大致脉络。
       *   **细节深潜 (核心时间)**：精读方法论、实验设计、网络结构、损失函数等关键章节。
@@ -144,7 +144,7 @@
      *   **整体架构概述**: 首先用一段连贯的文字概括描述论文提出的方法/模型的整体Pipeline。
      *   **详细网络架构与数据流**:
           *   从**数据预处理**开始，逐步描述数据是如何在网络中流动的，直至最终输出。
-          *   **逐层/逐模块解析**: 详细描述网络中每个关键层或模块的设计。包括但不限于：
+          *   **逐层/逐模块解析**: 详细描述网络中每个关键层或模块的设计。这一模块的笔记务必不能遗漏论文中的任何细节。包括但不限于：
               *   **层/模块类型**: (例如，Convolutional Layer, Transformer Encoder, Attention Mechanism, Custom-designed Block等)。
               *   **设计细节**: 该层/模块的具体配置（如卷积核大小、步长、通道数变化、激活函数、归一化方式等）。如果某个模块设计新颖或至关重要，请详细解释其内部结构和工作原理。
               *   **形状变换 (Shape Transformation)**: 清晰说明数据在经过每一层/模块后的**形状 (Shape) 或维度变化**。
@@ -185,11 +185,6 @@
      *   **未来工作方向**: 提出可能的改进方向或基于此工作的未来研究思路。
      *   **对个人研究的启发**: (如果适用) 这篇论文对你自己的研究有何启发？
   
-  ### 七、代码参考与分析建议 (若GitHub仓库可访问)
-  
-     *   **仓库链接**: [如果找到，请提供]
-     *   **核心模块实现探讨**: 基于论文描述，建议关注代码库中哪些核心模块（例如，新颖的网络层、关键的算法流程）的实现。如果时间允许且代码可读性高，可简要讨论代码实现与论文描述的一致性或关键实现技巧。若不进行详细代码分析，则建议读者自行查阅并关注特定模块，例如："建议读者查阅作者提供的代码[链接]，重点关注[模块A]和[模块B]的实现，以理解其具体工作方式和参数配置。"
-  
   ---
   
   **专业术语处理**:
@@ -209,38 +204,43 @@
 
 ## 笔记目录
 
-- **base/**
-  - [202005_RAFT](base/202005_RAFT.md)
-  - **diffusion/**
-    - [201511_DMs](base/diffusion/201511_DMs.md)
-    - [202012_DDPMs](base/diffusion/202012_DDPMs.md)
-    - [202106_ADMs](base/diffusion/202106_ADMs.md)
-    - [202204_LDMs](base/diffusion/202204_LDMs.md)
-    - [202305_DiT](base/diffusion/202305_DiT.md)
-    - [survey](base/diffusion/survey.md)
-  - **ssm/**
-  - **tokenizer/**
-    - [202201_iBOT](base/tokenizer/202201_iBOT.md)
-    - [202402_DINOv2](base/tokenizer/202402_DINOv2.md)
-    - [survey](base/tokenizer/survey.md)
-  - **transformer/**
-- **motion/**
-  - [202208_QuickPose](motion/202208_QuickPose.md)
-  - [202306_HMR3D](motion/202306_HMR3D.md)
-  - [202308_HMR2.0](motion/202308_HMR2.0.md)
-  - [202312_ViTPose++](motion/202312_ViTPose++.md)
-  - [202403_TRAM](motion/202403_TRAM.md)
-  - [202409_GVHMR](motion/202409_GVHMR.md)
-  - [202501_JOSH](motion/202501_JOSH.md)
-- **reconstruction/**
-  - [202503_VGGT](reconstruction/202503_VGGT.md)
-  - **3dscene/**
-    - [202308_PlainDETR](reconstruction/3dscene/202308_PlainDETR.md)
-    - [202412_CubifyAnything](reconstruction/3dscene/202412_CubifyAnything.md)
-    - [202503_LiteReality](reconstruction/3dscene/202503_LiteReality.md)
-    - [202505_CAST](reconstruction/3dscene/202505_CAST.md)
-  - **depth/**
-    - [202105_DPT](reconstruction/depth/202105_DPT.md)
-    - [202410_DepthAnythingV2](reconstruction/depth/202410_DepthAnythingV2.md)
-  - **match/**
-    - [202305_RoMa](reconstruction/match/202305_RoMa.md)
+- **Base/**
+  - [202005_RAFT](Base/202005_RAFT.md)
+  - **Diffusion_Models/**
+    - [201511_DMs](Base/Diffusion_Models/201511_DMs.md)
+    - [202012_DDPMs](Base/Diffusion_Models/202012_DDPMs.md)
+    - [202106_ADMs](Base/Diffusion_Models/202106_ADMs.md)
+    - [202204_LDMs](Base/Diffusion_Models/202204_LDMs.md)
+    - [202305_DiT](Base/Diffusion_Models/202305_DiT.md)
+    - [survey](Base/Diffusion_Models/survey.md)
+  - **SSM/**
+  - **Tokenization/**
+    - [202201_iBOT](Base/Tokenization/202201_iBOT.md)
+    - [202402_DINOv2](Base/Tokenization/202402_DINOv2.md)
+    - [survey](Base/Tokenization/survey.md)
+  - **Transformer/**
+- **Generation/**
+  - [202412_Imagen3](Generation/202412_Imagen3.md)
+- **Human_Motion/**
+  - [202208_QuickPose](Human_Motion/202208_QuickPose.md)
+  - [202306_HMR3D](Human_Motion/202306_HMR3D.md)
+  - [202308_HMR2.0](Human_Motion/202308_HMR2.0.md)
+  - [202312_ViTPose++](Human_Motion/202312_ViTPose++.md)
+  - [202403_TRAM](Human_Motion/202403_TRAM.md)
+  - [202409_GVHMR](Human_Motion/202409_GVHMR.md)
+  - [202501_JOSH](Human_Motion/202501_JOSH.md)
+- **Reconsturction/**
+  - [202503_VGGT](Reconsturction/202503_VGGT.md)
+  - **CAD/**
+    - [202308_PlainDETR](Reconsturction/CAD/202308_PlainDETR.md)
+    - [202412_CubifyAnything](Reconsturction/CAD/202412_CubifyAnything.md)
+    - [202503_LiteReality](Reconsturction/CAD/202503_LiteReality.md)
+    - [202505_CAST](Reconsturction/CAD/202505_CAST.md)
+    - **Ref/**
+      - [202405_BlockFusion](Reconsturction/CAD/Ref/202405_BlockFusion.md)
+      - [202411_BrepGen](Reconsturction/CAD/Ref/202411_BrepGen.md)
+  - **Depth_Estimation/**
+    - [202105_DPT](Reconsturction/Depth_Estimation/202105_DPT.md)
+    - [202410_DepthAnythingV2](Reconsturction/Depth_Estimation/202410_DepthAnythingV2.md)
+  - **Matching/**
+    - [202305_RoMa](Reconsturction/Matching/202305_RoMa.md)

@@ -210,17 +210,18 @@
 ## Table of Contents
 
 - **base/**
-  - [RAFT](base/RAFT.md)
+  - [202005_RAFT](base/202005_RAFT.md)
   - **diffusion/**
+    - [201511_DMs](base/diffusion/201511_DMs.md)
     - [202012_DDPMs](base/diffusion/202012_DDPMs.md)
+    - [202106_ADMs](base/diffusion/202106_ADMs.md)
     - [202204_LDMs](base/diffusion/202204_LDMs.md)
     - [202305_DiT](base/diffusion/202305_DiT.md)
-    - [DMs](base/diffusion/DMs.md)
     - [survey](base/diffusion/survey.md)
   - **ssm/**
   - **tokenizer/**
-    - [DINOv2](base/tokenizer/DINOv2.md)
-    - [iBOT](base/tokenizer/iBOT.md)
+    - [202201_iBOT](base/tokenizer/202201_iBOT.md)
+    - [202402_DINOv2](base/tokenizer/202402_DINOv2.md)
     - [survey](base/tokenizer/survey.md)
   - **transformer/**
 - **motion/**

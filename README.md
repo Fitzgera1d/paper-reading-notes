@@ -221,7 +221,7 @@
     - [202312_CrossDiT](Base/Diffusion_Models/202312_CrossDiT.md)
     - [202312_UViT](Base/Diffusion_Models/202312_UViT.md)
     - [202405_MMDiT](Base/Diffusion_Models/202405_MMDiT.md)
-    - [202501_FLUX_Context](Base/Diffusion_Models/202501_FLUX_Context.md)
+    - [202501_FLUX](Base/Diffusion_Models/202501_FLUX.md)
     - [survey](Base/Diffusion_Models/survey.md)
   - **SSM/**
   - **Tokenization/**
@@ -229,6 +229,7 @@
     - [202402_DINOv2](Base/Tokenization/202402_DINOv2.md)
     - [survey](Base/Tokenization/survey.md)
   - **Transformer/**
+    - [202110_LoRA](Base/Transformer/202110_LoRA.md)
 - **Generation/**
   - [202412_Imagen3](Generation/202412_Imagen3.md)
 - **Human_Motion/**

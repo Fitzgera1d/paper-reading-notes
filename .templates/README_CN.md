@@ -1,6 +1,6 @@
 # CV Paper Reading Notes
 
-[English](./README_EN.md) | 中文
+中文 | [English](./README_EN.md)
 
 ## 阅读什么论文？如何阅读论文？
 

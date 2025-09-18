@@ -217,6 +217,9 @@
     - [202106_ADMs](Base/Diffusion_Models/202106_ADMs.md)
     - [202204_LDMs](Base/Diffusion_Models/202204_LDMs.md)
     - [202305_DiT](Base/Diffusion_Models/202305_DiT.md)
+    - [202312_CrossDiT](Base/Diffusion_Models/202312_CrossDiT.md)
+    - [202312_UViT](Base/Diffusion_Models/202312_UViT.md)
+    - [202405_MMDiT](Base/Diffusion_Models/202405_MMDiT.md)
     - [survey](Base/Diffusion_Models/survey.md)
   - **SSM/**
   - **Tokenization/**

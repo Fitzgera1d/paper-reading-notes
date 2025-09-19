@@ -212,6 +212,7 @@
 - **Base/**
   - [202005_RAFT](Base/202005_RAFT.md)
   - **Diffusion_Models/**
+    - [000000_survey](Base/Diffusion_Models/000000_survey.md)
     - [201511_DMs](Base/Diffusion_Models/201511_DMs.md)
     - [202012_DDPMs](Base/Diffusion_Models/202012_DDPMs.md)
     - [202106_ADMs](Base/Diffusion_Models/202106_ADMs.md)
@@ -222,12 +223,11 @@
     - [202312_UViT](Base/Diffusion_Models/202312_UViT.md)
     - [202405_MMDiT](Base/Diffusion_Models/202405_MMDiT.md)
     - [202501_FLUX](Base/Diffusion_Models/202501_FLUX.md)
-    - [survey](Base/Diffusion_Models/survey.md)
   - **SSM/**
   - **Tokenization/**
+    - [000000_survey](Base/Tokenization/000000_survey.md)
     - [202201_iBOT](Base/Tokenization/202201_iBOT.md)
     - [202402_DINOv2](Base/Tokenization/202402_DINOv2.md)
-    - [survey](Base/Tokenization/survey.md)
   - **Transformer/**
     - [202110_LoRA](Base/Transformer/202110_LoRA.md)
 - **Generation/**
@@ -253,5 +253,8 @@
   - **Depth_Estimation/**
     - [202105_DPT](Reconsturction/Depth_Estimation/202105_DPT.md)
     - [202410_DepthAnythingV2](Reconsturction/Depth_Estimation/202410_DepthAnythingV2.md)
+    - [202504_MoGe](Reconsturction/Depth_Estimation/202504_MoGe.md)
+    - [202507_MoGe2](Reconsturction/Depth_Estimation/202507_MoGe2.md)
+    - [202509_MapAnything](Reconsturction/Depth_Estimation/202509_MapAnything.md)
   - **Matching/**
     - [202305_RoMa](Reconsturction/Matching/202305_RoMa.md)

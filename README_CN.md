@@ -224,6 +224,7 @@
     - [000000_survey](Base/Tokenization/000000_survey.md)
     - [202201_iBOT](Base/Tokenization/202201_iBOT.md)
     - [202402_DINOv2](Base/Tokenization/202402_DINOv2.md)
+    - [202508_DINOv3](Base/Tokenization/202508_DINOv3.md)
   - **Transformer/**
     - [202110_LoRA](Base/Transformer/202110_LoRA.md)
 - **Generation/**

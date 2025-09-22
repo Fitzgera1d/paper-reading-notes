@@ -76,7 +76,70 @@
       *   **拓扑编码** (Node Duplication):
           
           *   Mating Duplication: 为解除图的共享结构，共享的边和顶点会在各自的父节点下被复制。
-          *   Association Duplication: 为统一树的宽度，随机复制子节点，直到达到预设的最大分支数量（例如，每个实体最多50个面，每个面最多40条边）。
+          * Association Duplication: 为统一树的宽度，随机复制子节点，直到达到预设的最大分支数量（例如，每个实体最多50个面，每个面最多40条边）。
+          
+            > **Association Duplication** 是BrepGen用来将可变大小的 B-rep（边界表示）数据转换成固定大小的树结构的一种巧妙方法。在CAD模型中，一个实体（solid）可以由任意数量的面（face）组成，而每个面又可以由任意数量的边（edge）界定。这种可变性使得直接使用神经网络处理变得困难。
+            >
+            > - 核心思想：为一个实体和每个面预定义一个固定的、最大的子节点数量（即最大面数和最大边数），然后通过随机复制现有的面或边来填充，直到达到这个最大数量。这个 Duplication 由 DiT 模块学习。
+            >
+            > - 优点
+            >   1. 统一数据结构： 将所有CAD模型都转换成具有相同结构的树，方便神经网络处理。
+            >   2. 避免过拟合： 随机选择要复制的节点，有助于防止模型在训练过程中过拟合。
+            >
+            > - 代码实现
+            >
+            >   在`dataset.py`中，Association Duplication的实现主要体现在`SurfPosData`和`EdgePosData`这两个数据集类中。
+            >
+            >   1. 面的Association Duplication
+            >
+            >      在`SurfPosData`类的`__getitem__`方法中，我们可以看到面的复制过程：
+            >
+            >      ```python
+            >      class SurfPosData(torch.utils.data.Dataset):
+            >       """ Surface position (3D bbox) Dataloader """
+            >       def __init__(self, input_data, input_list, validate=False, aug=False, args=None):
+            >         self.max_face = args.max_face
+            >         # ...
+            >       def __getitem__(self, index):
+            >         # ...
+            >         # Padding
+            >         surf_pos = pad_repeat(surf_pos, self.max_face)
+            >         # ...
+            >      ```
+            >
+            >       这里的`pad_repeat`函数（定义在`utils.py`中）是实现“Association Duplication”的关键。它接收一个面的包围盒数组`surf_pos`和预设的最大面数`self.max_face`，然后重复数组中的元素直到总数达到`self.max_face`。
+            >
+            >   2. 边的Association Duplication
+            >
+            >      同样地，在`EdgePosData`类的`__getitem__`方法中，我们能找到边的复制过程：
+            >
+            >      ```python
+            >      class EdgePosData(torch.utils.data.Dataset):
+            >       """ Edge Position (3D bbox) Dataloader """
+            >       def __init__(self, input_data, input_list, validate=False, aug=False, args=None):
+            >         self.max_edge = args.max_edge
+            >         # ...
+            >       def __getitem__(self, index):
+            >         # ...
+            >         edge_pos_new = []
+            >         for pos in edge_pos_duplicated:
+            >             random_indices = np.random.permutation(pos.shape[0])
+            >             pos = pos[random_indices]
+            >             pos = pad_repeat(pos, self.max_edge) #make sure some values are always repeated
+            >             random_indices = np.random.permutation(pos.shape[0])
+            >             pos = pos[random_indices]
+            >             edge_pos_new.append(pos)
+            >         edge_pos = np.stack(edge_pos_new)
+            >         # ...
+            >      ```
+            >
+            >      这段代码对每个面所属的边进行处理。首先，它随机打乱边的顺序，然后调用`pad_repeat`函数将边的数量填充到预设的最大边数`self.max_edge`。最后，它再次打乱顺序，以增加随机性。
+            >
+            > - 生成阶段的处理：为了得到最终的、有效的B-rep模型，需要进行后处理来移除这些重复的节点。
+            >   1. 检测重复面： 通过比较面的包围盒和几何特征来识别重复的面。
+            >   1. 检测重复边： 同样，通过比较边的包围盒和几何特征来识别重复的边。
+            >   1. 重建拓扑关系： 在移除重复节点后，需要重新构建面、边、顶点之间的邻接关系。
+            >   1. 联合优化： 最后，通过一个优化过程来微调所有几何元素的位置，以确保它们能完美地拼接在一起，形成一个 watertight 的实体。
       
   2.  **级联式潜在扩散模型 (Latent Diffusion Module)**:
       *   这是一个由四个独立的Transformer Denoiser组成的序列，严格按照从粗到细、自顶向下的顺序生成树的特征。
@@ -87,7 +150,7 @@
           4.  **Denoiser 4 (Edge-Vertex Shape)**: 输入带噪声的边-顶点联合隐向量`Ezv`，以其父节点（面）特征`F`和刚生成的边位置`Ep`为条件，输出去噪后的`Ezv`。
       *   **条件注入**: 条件信息（如父节点的特征）通过简单的将其嵌入向量与子节点的嵌入向量相加来实现，而非使用复杂的交叉注意力机制。
       *   **消融实验的作用分析**: 论文的消融研究（6.4.1节）有力地证明了这种统一生成几何和拓扑的方法的优越性。当尝试将拓扑生成和几何生成分为两步时（先生成拓扑邻接矩阵，再根据拓扑生成几何），仅拓扑生成这一步的有效率就极低（仅6.2%），说明显式生成正确的拓扑非常困难。`BrepGen`的统一方法巧妙地规避了这个问题。
-
+  
 * **损失函数 (Loss Function)**:
   *   **设计理念**: 论文采用了标准Denoising Diffusion Probabilistic Models (DDPM)的训练目标。对于上述四个Denoiser网络中的每一个，其损失函数都是预测所添加的高斯噪声`ε`与真实噪声之间的L2距离。
   *   **数学形式**: $L = \mathbb{E}_{t, x_0, \epsilon} \left[ || \epsilon - \epsilon_\theta(\sqrt{\bar{\alpha}_t}x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon, t) ||^2 \right]$

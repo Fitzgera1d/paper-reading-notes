@@ -207,6 +207,9 @@
 
 - **Base/**
   - [202005_RAFT](Base/202005_RAFT.md)
+  - **AE/**
+    - [202204_MultiMAE](Base/AE/202204_MultiMAE.md)
+    - [202510_RAEs](Base/AE/202510_RAEs.md)
   - **Diffusion_Models/**
     - [000000_survey](Base/Diffusion_Models/000000_survey.md)
     - [201511_DMs](Base/Diffusion_Models/201511_DMs.md)
@@ -231,13 +234,16 @@
   - [202412_Imagen3](Generation/202412_Imagen3.md)
 - **Human_Motion/**
   - [202208_QuickPose](Human_Motion/202208_QuickPose.md)
-  - [202306_HMR3D](Human_Motion/202306_HMR3D.md)
+  - [202306_SAHMR](Human_Motion/202306_SAHMR.md)
   - [202308_HMR2.0](Human_Motion/202308_HMR2.0.md)
   - [202312_ViTPose++](Human_Motion/202312_ViTPose++.md)
   - [202403_TRAM](Human_Motion/202403_TRAM.md)
+  - [202407_MultiHMR](Human_Motion/202407_MultiHMR.md)
   - [202409_GVHMR](Human_Motion/202409_GVHMR.md)
   - [202501_JOSH](Human_Motion/202501_JOSH.md)
+  - [202510_HUMAN3R](Human_Motion/202510_HUMAN3R.md)
 - **Reconsturction/**
+  - [202501_CUT3R](Reconsturction/202501_CUT3R.md)
   - [202503_VGGT](Reconsturction/202503_VGGT.md)
   - **CAD/**
     - [202308_PlainDETR](Reconsturction/CAD/202308_PlainDETR.md)

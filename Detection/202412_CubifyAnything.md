@@ -42,7 +42,7 @@
 
 ### 三、论文方法论 (The Proposed Pipeline)
 
-![image-20250902212924832](../../assets/image-20250902212924832.png)
+![image-20250902212924832](../assets/image-20250902212924832.png)
 
 *   **整体架构概述**: 论文提出的Cubify Transformer (CuTR) 是一个单阶段、单尺度的Transformer基3D物体检测器，其核心思想是直接从2D图像特征预测3D边界框，避免了将输入提升到3D空间进行点云或体素处理的复杂性。整个流程可以概括为：输入RGB图像和可选的深度图，通过ViT（Vision Transformer）骨干网络提取2D特征，然后将这些特征输入Transformer解码器，解码器利用交叉注意力机制预测2D和3D边界框，最终输出9-DOF的3D物体检测结果。
 

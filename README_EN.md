@@ -234,6 +234,11 @@
     - [202508_DINOv3](Base/Tokenization/202508_DINOv3.md)
   - **Transformer/**
     - [202110_LoRA](Base/Transformer/202110_LoRA.md)
+    - [202306_Hiera](Base/Transformer/202306_Hiera.md)
+- **Detection/**
+  - [202308_PlainDETR](Detection/202308_PlainDETR.md)
+  - [202410_SAM2](Detection/202410_SAM2.md)
+  - [202412_CubifyAnything](Detection/202412_CubifyAnything.md)
 - **Generation/**
   - [202412_Imagen3](Generation/202412_Imagen3.md)
 - **Human_Motion/**
@@ -250,8 +255,6 @@
   - [202501_CUT3R](Reconsturction/202501_CUT3R.md)
   - [202503_VGGT](Reconsturction/202503_VGGT.md)
   - **CAD/**
-    - [202308_PlainDETR](Reconsturction/CAD/202308_PlainDETR.md)
-    - [202412_CubifyAnything](Reconsturction/CAD/202412_CubifyAnything.md)
     - [202503_LiteReality](Reconsturction/CAD/202503_LiteReality.md)
     - [202505_CAST](Reconsturction/CAD/202505_CAST.md)
     - **Ref/**

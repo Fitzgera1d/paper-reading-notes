@@ -249,6 +249,7 @@
   - [202403_TRAM](Human_Motion/202403_TRAM.md)
   - [202407_MultiHMR](Human_Motion/202407_MultiHMR.md)
   - [202409_GVHMR](Human_Motion/202409_GVHMR.md)
+  - [202411_CameraHMR](Human_Motion/202411_CameraHMR.md)
   - [202501_JOSH](Human_Motion/202501_JOSH.md)
   - [202510_HUMAN3R](Human_Motion/202510_HUMAN3R.md)
 - **Reconsturction/**

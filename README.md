@@ -250,7 +250,9 @@
   - [202407_MultiHMR](Human_Motion/202407_MultiHMR.md)
   - [202409_GVHMR](Human_Motion/202409_GVHMR.md)
   - [202411_CameraHMR](Human_Motion/202411_CameraHMR.md)
+  - [202411_SATHMR](Human_Motion/202411_SATHMR.md)
   - [202501_JOSH](Human_Motion/202501_JOSH.md)
+  - [202503_EDPose++](Human_Motion/202503_EDPose++.md)
   - [202510_HUMAN3R](Human_Motion/202510_HUMAN3R.md)
 - **Reconsturction/**
   - [202501_CUT3R](Reconsturction/202501_CUT3R.md)
@@ -263,9 +265,10 @@
       - [202411_BrepGen](Reconsturction/CAD/Ref/202411_BrepGen.md)
   - **Depth_Estimation/**
     - [202105_DPT](Reconsturction/Depth_Estimation/202105_DPT.md)
-    - [202410_DepthAnythingV2](Reconsturction/Depth_Estimation/202410_DepthAnythingV2.md)
+    - [202410_DA2](Reconsturction/Depth_Estimation/202410_DA2.md)
     - [202504_MoGe](Reconsturction/Depth_Estimation/202504_MoGe.md)
     - [202507_MoGe2](Reconsturction/Depth_Estimation/202507_MoGe2.md)
     - [202509_MapAnything](Reconsturction/Depth_Estimation/202509_MapAnything.md)
+    - [202511_DA3](Reconsturction/Depth_Estimation/202511_DA3.md)
   - **Matching/**
     - [202305_RoMa](Reconsturction/Matching/202305_RoMa.md)

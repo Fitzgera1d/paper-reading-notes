@@ -235,6 +235,7 @@
   - [202308_PlainDETR](Detection/202308_PlainDETR.md)
   - [202410_SAM2](Detection/202410_SAM2.md)
   - [202412_CubifyAnything](Detection/202412_CubifyAnything.md)
+  - [202511_SAM3](Detection/202511_SAM3.md)
 - **Generation/**
   - [202412_Imagen3](Generation/202412_Imagen3.md)
 - **Human_Motion/**
@@ -250,6 +251,7 @@
   - [202501_JOSH](Human_Motion/202501_JOSH.md)
   - [202503_EDPose++](Human_Motion/202503_EDPose++.md)
   - [202510_HUMAN3R](Human_Motion/202510_HUMAN3R.md)
+  - [202511_3DB](Human_Motion/202511_3DB.md)
 - **Reconsturction/**
   - [202501_CUT3R](Reconsturction/202501_CUT3R.md)
   - [202503_VGGT](Reconsturction/202503_VGGT.md)
@@ -266,5 +268,6 @@
     - [202507_MoGe2](Reconsturction/Depth_Estimation/202507_MoGe2.md)
     - [202509_MapAnything](Reconsturction/Depth_Estimation/202509_MapAnything.md)
     - [202511_DA3](Reconsturction/Depth_Estimation/202511_DA3.md)
+    - [202512_D4RT](Reconsturction/Depth_Estimation/202512_D4RT.md)
   - **Matching/**
     - [202305_RoMa](Reconsturction/Matching/202305_RoMa.md)

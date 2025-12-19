@@ -14,7 +14,9 @@ Please organize the notes around the following structure, ensuring that each par
 
 ---
 
-# Paper Title: [Paper Title] - [Conference/Journal] [Year]
+# [Paper Title] - [Abbreviation of Conference/Journal_Year]
+
+> [Arxiv ID/Paper links]
 
 ### I. Introduction and Core Problem
 

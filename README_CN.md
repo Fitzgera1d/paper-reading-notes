@@ -122,7 +122,9 @@
   
   ---
   
-  # 论文标题: [论文标题] - [会议/期刊] [年份]
+  # [论文标题] - [会议/期刊简称_年份] 
+  
+  > [Arxiv ID/论文链接]
   
   ### 一、引言与核心问题
   
@@ -227,6 +229,7 @@
     - [000000_survey](Base/Tokenization/000000_survey.md)
     - [202201_iBOT](Base/Tokenization/202201_iBOT.md)
     - [202402_DINOv2](Base/Tokenization/202402_DINOv2.md)
+    - [202504_PE](Base/Tokenization/202504_PE.md)
     - [202508_DINOv3](Base/Tokenization/202508_DINOv3.md)
   - **Transformer/**
     - [202110_LoRA](Base/Transformer/202110_LoRA.md)

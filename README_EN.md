@@ -121,7 +121,9 @@
   
   ---
   
-  # Paper Title: [Paper Title] - [Conference/Journal] [Year]
+  # [Paper Title] - [Abbreviation of Conference/Journal_Year]
+  
+  > [Arxiv ID/Paper links]
   
   ### I. Introduction and Core Problem
   
@@ -231,6 +233,7 @@
     - [000000_survey](Base/Tokenization/000000_survey.md)
     - [202201_iBOT](Base/Tokenization/202201_iBOT.md)
     - [202402_DINOv2](Base/Tokenization/202402_DINOv2.md)
+    - [202504_PE](Base/Tokenization/202504_PE.md)
     - [202508_DINOv3](Base/Tokenization/202508_DINOv3.md)
   - **Transformer/**
     - [202110_LoRA](Base/Transformer/202110_LoRA.md)

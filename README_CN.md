@@ -254,6 +254,7 @@
   - [202501_JOSH](Human_Motion/202501_JOSH.md)
   - [202503_EDPose++](Human_Motion/202503_EDPose++.md)
   - [202510_HUMAN3R](Human_Motion/202510_HUMAN3R.md)
+  - [202510_PhySIC](Human_Motion/202510_PhySIC.md)
   - [202511_3DB](Human_Motion/202511_3DB.md)
 - **Reconsturction/**
   - [202501_CUT3R](Reconsturction/202501_CUT3R.md)

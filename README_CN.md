@@ -262,6 +262,7 @@
   - **CAD/**
     - [202503_LiteReality](Reconsturction/CAD/202503_LiteReality.md)
     - [202505_CAST](Reconsturction/CAD/202505_CAST.md)
+    - [202511_SAM3D](Reconsturction/CAD/202511_SAM3D.md)
     - **Ref/**
       - [202405_BlockFusion](Reconsturction/CAD/Ref/202405_BlockFusion.md)
       - [202411_BrepGen](Reconsturction/CAD/Ref/202411_BrepGen.md)

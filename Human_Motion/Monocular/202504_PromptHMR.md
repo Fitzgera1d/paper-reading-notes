@@ -47,7 +47,7 @@ PromptHMR 是一篇旨在解决复杂场景下 **3D 人体姿态与形状估计 
 
 ### 三、论文方法论 (The Proposed Pipeline)
 
-![image-20260107155951531](../assets/image-20260107155951531.png)
+![image-20260107155951531](../../assets/image-20260107155951531.png)
 
 PromptHMR 采用类似 SAM 的 Transformer 架构：**Image Encoder** 提取图像特征，**Prompt Encoder** 编码提示信息，**Lightweight Decoder** 融合两者并回归参数。
 

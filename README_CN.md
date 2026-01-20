@@ -262,6 +262,7 @@
     - [202208_QuickPose](Human_Motion/MultiView/202208_QuickPose.md)
     - [202505_HSfM](Human_Motion/MultiView/202505_HSfM.md)
     - [202508_HAMSt3R](Human_Motion/MultiView/202508_HAMSt3R.md)
+    - [202509_HART](Human_Motion/MultiView/202509_HART.md)
     - [202510_Kineo](Human_Motion/MultiView/202510_Kineo.md)
 - **Reconsturction/**
   - [202501_CUT3R](Reconsturction/202501_CUT3R.md)

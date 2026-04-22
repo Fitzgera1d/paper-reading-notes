@@ -45,6 +45,8 @@
 
 本节除特别说明外均依据论文正文与附录性材料描述。需要注意的是，论文只公开了正文和 arXiv source，不包含补充材料里提到的 Algorithm 1，因此少量底层 lookup 细节只能保守地标成 `[Inference]` 或“未确认”。
 
+![image-20260422130610778](../../assets/image-20260422130610778.png)
+
 ### 3.1 整体 Pipeline 概述
 
 DiffProxy 的完整流程分成四段。第一段是 synthetic data preparation：作者离线渲染大规模多视角人体图像，并且对每个像素直接生成精确的 SMPL-X segmentation/UV proxy，作为 diffusion 模型监督。第二段是 proxy generation：输入多视角 RGB 和相机参数，利用冻结的 SD 2.1 UNet 加轻量可训练模块，分别为每个视角生成 body-part segmentation 图和 UV correspondence 图。第三段是 hand refinement 与 test-time scaling：先用初始全身 proxy 找到手部区域并做高分辨率 hand crop，再对 body/hand proxy 做多次随机采样，聚合得到稳健 proxy 与逐像素不确定性权重。第四段是 mesh fitting：把每个前景像素映射到 SMPL-X 表面点，计算 uncertainty-weighted reprojection loss，并用 DPoser-X 作为 pose prior，最终优化出 SMPL-X mesh。
@@ -83,6 +85,8 @@ DiffProxy 的核心中间表示是 $\mathbf{P}_v=(\mathbf{P}_v^{seg},\mathbf{P}_
 这个设计的关键价值是：一个前景像素不再只对应“某个关节的大致方向”，而是对应到“SMPL-X 表面某个 body part 上的某个 UV 点”。换言之，proxy 把二维像素直接连接到三维网格表面，这比关键点提供的几何约束密度高得多。论文没有写 body-part palette 的精确类别数；手部 prompt 只明确说把每只手细分成 12 个 part（两块 palm、十根手指）。
 
 #### 3.3.3 Multi-conditional diffusion proxy generator
+
+![image-20260422130518581](../../assets/image-20260422130518581.png)
 
 proxy generator $G_\phi$ 建在 Stable Diffusion 2.1 上，UNet backbone 冻结，仅训练附加模块。输入是多视角 RGB 和透视相机参数 $\{C_v\}$，输出是每视角两个 proxy 图 $\mathbf{P}_v^{seg},\mathbf{P}_v^{uv}\in\mathbb{R}^{256\times256\times3}$。
 
@@ -323,11 +327,15 @@ $$
 
 论文的实验结论可以概括成一句话：当中间表示从 sparse keypoints 换成 diffusion 生成的 dense proxy，并配上 uncertainty-weighted fitting 后，最终精度和跨数据集泛化都显著提升。
 
+![image-20260422130634376](../../assets/image-20260422130634376.png)
+
 先看主结果。完整模型在 RICH、BEHAVE、MoYo、4D-DRESS 和 4D-DRESS partial 上都拿到了最好的 MPVPE，分别是 35.1、39.9、38.8、25.6 和 43.1 mm；与 fitting-based baseline EasyMoCap 相比，对应数值分别是 60.3、40.4、51.6、35.3 和 119.4 mm。其中最能体现方法价值的是 RICH 和 4D-DRESS partial：前者说明 dense proxy 在真实复杂背景下比 sparse keypoints 更稳定，后者说明方法在局部可见性很差时依然能依赖可见表面维持几何约束。
 
 3DHP 的情况更微妙。完整模型在 3DHP 上的 MPJPE / MPVPE 是 41.1 / 50.9 mm，已经优于 EasyMoCap 的 43.7 / 51.5，也优于 HeatFormer 的 49.9 / 53.3；但 PA-MPJPE / PA-MPVPE 的最优仍来自 HeatFormer。作者在定性分析里指出，3DHP 的 GT mesh 与图像本身存在可见 offset，因此训练在该数据集上的方法更容易贴合这种标注偏置；这解释了为什么 DiffProxy 在视觉对齐上更紧，而 PA 指标未必全面领先。
 
 两个新增模块也都有清晰贡献。hand refinement 从 `w/o HR, TTS` 到 `w/o TTS` 持续带来收益，例如 RICH 的 MPVPE 从 46.5 降到 36.2，4D-DRESS 的 MPVPE 从 33.4 降到 26.2，4D-DRESS partial 的 MPVPE 从 52.0 降到 44.4 mm。test-time scaling 则在 hand refinement 之后继续提供一轮稳定改进，例如 RICH 从 36.2 到 35.1、MoYo 从 39.6 到 38.8、4D-DRESS partial 从 44.4 到 43.1 mm。这组结果和图 7 的腿部标签互换案例是相互对应的：TTS 不是“让 proxy 本身更对”，而是让错误区域在 fitting 中自动降权。[Inference]
+
+![image-20260422130701546](../../assets/image-20260422130701546.png)
 
 模块消融进一步说明 proxy generator 的三路条件和多种注意力都不是可有可无的。在 BEHAVE 上，去掉 DINOv2 后 MPVPE 从 39.9 恶化到 60.2，去掉 T2I-Adapter 变成 48.4，去掉 $\mathcal{A}_{text}$、$\mathcal{A}_{epi}$ 或 $\mathcal{A}_{cm}$ 也都会退化到 41.9 到 43.3 区间。这说明作者的设计不是“只靠一个大扩散骨干”，而是明确需要：文本条件区分输出类型，T2I 特征保证像素级对齐，DINOv2 提供视觉先验，Acm 保证 segmentation/UV 一致，Aepi 保证多视角一致。[Inference]
 

@@ -24,10 +24,12 @@ Use the following principles to control the reading order, evidence handling, an
    - Avoid vague phrases such as "several layers," "multiple modules," or "uses a backbone to extract features." Be as specific as possible about the hierarchy, modules, inputs, outputs, shape changes, and intermediate representations.
 
 3. **Distinguish information sources**
-   - Mark important technical claims with their source whenever possible:
-     - `[Paper]`: explicitly stated in the paper
-     - `[Code]`: directly confirmed in the implementation
+   - By default, treat the main body of the note as coming from the paper. Do not add `[Paper]` after sentence after sentence.
+   - Only mark sources explicitly in the following cases:
+     - `[Code]`: directly confirmed in the implementation, and it clarifies a detail that the paper leaves underspecified
      - `[Inference]`: a reasonable inference from the paper and code
+     - `not confirmed`: a key detail that cannot be confirmed from either the paper or the code
+   - If an entire section is mainly based on the paper, you may state once at the beginning that the section is based on the paper unless noted otherwise. Do not keep repeating `[Paper]` at the end of sentences.
    - If something is uncertain, say so explicitly. Do not present an inference as a confirmed fact.
 
 4. **Methodology is the main focus**
@@ -120,7 +122,7 @@ For every important module, describe as many of the following points as possible
 - The specific problem this module is meant to solve
 - If the paper includes ablations, what evidence they provide for the module's contribution
 
-If the paper is unclear and the code resolves the point, mark it as `[Code]`. If the point can only be inferred, mark it as `[Inference]`.
+If the paper is unclear and the code resolves the point, mark it as `[Code]`. If the point can only be inferred, mark it as `[Inference]`. If neither the paper nor the code confirms the detail, write `not confirmed` directly.
 
 ### 3.4 Loss functions and training objective
 
@@ -185,6 +187,9 @@ The final output must satisfy all of the following constraints.
 
 - The output must be formatted as `.md` content.
 - Show the final note inside a Markdown code block.
+- Do not insert mid-sentence line breaks or hard wraps for width. Only keep line breaks that are necessary for Markdown structure itself.
+- Keep each paragraph continuous, and keep each list item on a single line whenever possible unless a table or code block requires otherwise.
 - The priority is to explain the method clearly, concretely, and in a way that can be checked against the paper.
 - Use code only to clarify what the paper leaves unclear. Do not let the code dominate the note.
+- Do not add `[Paper]` sentence by sentence. Paper-derived content is the default and should usually remain unmarked; only `[Code]`, `[Inference]`, and `not confirmed` should be marked explicitly.
 - If some details cannot be confirmed, say "not confirmed" explicitly instead of smoothing over the uncertainty.

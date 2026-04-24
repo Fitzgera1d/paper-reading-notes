@@ -379,7 +379,7 @@
     - [202510_HUMAN3R](Human_Motion/Monocular/202510_HUMAN3R.md)
     - [202510_PhySIC](Human_Motion/Monocular/202510_PhySIC.md)
     - [202511_3DB](Human_Motion/Monocular/202511_3DB.md)
-    - [202511_MA-HMR](Human_Motion/Monocular/202511_MA-HMR.md)
+    - [202511_MAHMR](Human_Motion/Monocular/202511_MAHMR.md)
     - [202601_UniSH](Human_Motion/Monocular/202601_UniSH.md)
   - **MultiView/**
     - [202111_MvP](Human_Motion/MultiView/202111_MvP.md)

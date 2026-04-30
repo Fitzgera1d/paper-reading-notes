@@ -346,6 +346,7 @@
     - [202312_UViT](Base/Diffusion_Models/202312_UViT.md)
     - [202405_MMDiT](Base/Diffusion_Models/202405_MMDiT.md)
     - [202501_FLUX](Base/Diffusion_Models/202501_FLUX.md)
+  - **SSM/**
   - **Tokenization/**
     - [000000_survey](Base/Tokenization/000000_survey.md)
     - [202201_iBOT](Base/Tokenization/202201_iBOT.md)

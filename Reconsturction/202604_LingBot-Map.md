@@ -34,6 +34,8 @@
 
 论文方法可以理解为“VGGT 风格前馈几何模型的 streaming 化”。普通 causal attention 能在线处理，但会缓存所有历史 image tokens；普通 sliding window 能限显存，但会丢失长程上下文。GCA 的核心是把不同几何作用的上下文分开存储和注意力访问，让模型在每帧推理时同时看到固定 reference、局部密集窗口和压缩轨迹记忆。
 
+![image-20260427112513765](../assets/image-20260427112513765.png)
+
 ### 3.1 整体 Pipeline 概述
 
 LingBot-Map 的完整流程分为训练和推理两层。训练时，作者先训练一个离线 base model，让 DINOv2 初始化的 ViT backbone 和 VGGT 风格的 alternating attention 学到可靠的多视图几何先验；第二阶段把 cross-frame global attention 替换为 GCA，并从 24 views 逐步扩展到 320 views，使模型适应长序列 causal reconstruction。推理时，前几帧作为 scale / anchor initialization，后续每帧被编码成 tokens，经过 Frame Attention 和 GCA 与三类上下文交互，camera head 输出 pose，depth head 输出 depth；对特别长的序列，Direct mode 可以换成 VO mode，用 overlapping windows 加 Sim(3) alignment 拼接局部轨迹。
@@ -84,6 +86,8 @@ $$
 所有 ground-truth depths 和 camera translations 都除以 $s$。这个设计把训练监督和推理时的 reference frames 对齐：模型不是在任意尺度下漂移，而是从一开始就被约束到 anchor 定义的 coordinate / scale frame。
 
 #### 3.3.2 Local Pose-Reference Window：局部密集几何上下文
+
+![image-20260427112548384](../assets/image-20260427112548384.png)
 
 anchor frames 只提供全局参考，但它们可能和当前帧相距很远，缺少足够重叠，无法支撑准确局部配准。因此 GCA 保留最近 $k$ 帧的完整 image tokens，形成 local pose-reference window。当前帧通过 GCA attend to 这些 dense visual tokens，获得相邻帧之间的视觉对应、局部结构和相对运动线索。
 
@@ -194,13 +198,23 @@ $\mathcal{L}_{\text{rot}}(i,j)$ 是两帧 relative pose 的 geodesic rotation er
 
 实验结论可以分成三层：长序列 pose 是否稳定、pose 改善是否转化为更好重建、GCA 各组件是否必要。
 
+![image-20260427112705033](../assets/image-20260427112705033.png)
+
 **Oxford Spires pose estimation**：在 sparse setting（320 frames，每 12 帧采样）中，LingBot-Map 的 AUC@15 / AUC@30 / ATE 为 61.64 / 75.16 / 6.42。相比之下，最强离线 baseline DA3 为 49.84 / 56.68 / 12.87，优化型 VIPE 为 45.35 / 51.88 / 10.52，online CUT3R 为 5.98 / 14.95 / 18.16。这说明即使在 streaming setting 中，结构化几何上下文也能超过离线和优化型方法在复杂 campus-scale trajectory 上的泛化能力。
+
+![image-20260427112641730](../assets/image-20260427112641730.png)
 
 **长序列稳定性**：在 Oxford Spires dense setting（3,840 frames）中，LingBot-Map 的 ATE 从 sparse 的 6.42 只升到 7.11，增加 0.69；CUT3R 从 18.16 升到 32.47，Wint3R 从 21.10 升到 32.90。这个对比直接支持 trajectory memory 的设计目标：当序列长度扩大 12 倍时，模型仍能维持接近恒定的全局轨迹误差。
 
+![image-20260427112807830](../assets/image-20260427112807830.png)
+
 **跨数据集 pose generalization**：在 ETH3D、7-Scenes、Tanks and Temples 上，LingBot-Map 的 AUC@30 / ATE 分别为 86.20 / 0.22、78.59 / 0.08、92.80 / 0.20，均为表中最好。ETH3D 兼具室内外 laser-scanned depth，7-Scenes 有 motion blur、textureless surfaces 和 repetitive structures，Tanks and Temples 是大规模 outdoor captures；跨这些场景领先说明方法不是只对 Oxford Spires 过拟合。
 
+![image-20260427112833202](../assets/image-20260427112833202.png)
+
 **3D reconstruction quality**：在 ETH3D、7-Scenes、NRGBD 上，LingBot-Map 的 F1 分别为 98.98、80.39、64.26，均为表中最好。尤其 ETH3D 上，第二名 Wint3R 的 F1 为 77.28，差距超过 21 点；NRGBD 上第二名 Wint3R 为 56.96，LingBot-Map 提升到 64.26。由于 point cloud reconstruction 依赖 pose 和 depth，一致的轨迹估计直接减少了重复表面、错位墙面和碎裂结构。
+
+![image-20260427112850480](../assets/image-20260427112850480.png)
 
 **GCA 消融**：在 TartanGround 长序列消融中，仅有 relative loss 的 baseline AUC@3 / ATE 为 9.80 / 8.59；加入 anchor initialization 后变为 13.63 / 7.88；加入 context tokens 后变为 15.75 / 7.46；最终加入 Video RoPE 后达到 16.39 / 5.98。结果表明：anchor 解决尺度/坐标初始不稳定，context tokens 缓解长程 drift，Video RoPE 让 trajectory memory 真正具备时序结构。
 

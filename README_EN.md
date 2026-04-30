@@ -396,7 +396,7 @@
   - [202503_VGGT](Reconsturction/202503_VGGT.md)
   - [202512_C3G](Reconsturction/202512_C3G.md)
   - [202601_MoE3D](Reconsturction/202601_MoE3D.md)
-  - [202604_LingBot-Map](Reconsturction/202604_LingBot-Map.md)
+  - [202604_LingBotMap](Reconsturction/202604_LingBotMap.md)
   - **CAD/**
     - [202503_LiteReality](Reconsturction/CAD/202503_LiteReality.md)
     - [202505_CAST](Reconsturction/CAD/202505_CAST.md)
